@@ -4,6 +4,10 @@
   "author": "paulgui",
   "mail": "gp5251@qq.com",
   "description": "Inline any text files with gulp.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gp5251/gulp-inline-txt.git"
+  },
   "keywords": [
     "gulpplugin",
     "inline",
