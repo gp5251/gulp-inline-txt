@@ -1,0 +1,19 @@
+{
+  "name": "gulp-inline-txt",
+  "version": "0.0.2",
+  "author": "paulgui",
+  "mail": "gp5251@qq.com",
+  "description": "Inline any text files with gulp.",
+  "keywords": [
+    "gulpplugin",
+    "inline",
+    "css",
+    "javascript"
+  ],
+  "dependencies": {
+    "gulp-util": "^3.0.8",
+    "through2": "^2.0.1"
+  },
+  "devDependencies": {
+  }
+}
