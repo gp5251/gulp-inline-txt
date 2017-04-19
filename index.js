@@ -14,7 +14,7 @@ module.exports = function (options) {
       return cb(new gutil.PluginError('gulp-inline-txt', 'Streaming not supported'));
     }
 
-    var str = file.contents.toString().replace(/__inline\(['"](.*?)['"]\);?/g, (match, filepath)=>{
+    var str = file.contents.toString().replace(/__inline\(['"](.*?)['"]\)/g, (match, filepath)=>{
       return loadFile(file.base, filepath);
     });
 
@@ -24,11 +24,11 @@ module.exports = function (options) {
   });
 };
 
-function loadFile(base, p, splitToken = ';') {
+function loadFile(base, p, splitToken = '') {
   p = path.resolve(base, p); 
   if (fs.existsSync(p)) {
     var str = fs.readFileSync(p, 'utf8');
-    var inlineExp = /__inline\(['"](.*?)['"]\);?/g;
+    var inlineExp = /__inline\(['"](.*?)['"]\)/g;
 
     str = str.replace(inlineExp,(match, p) => {
       return loadFile(base, p);
