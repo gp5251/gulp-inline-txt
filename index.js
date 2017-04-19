@@ -30,8 +30,8 @@ function loadFile(base, p, splitToken = '') {
     var str = fs.readFileSync(p, 'utf8');
     var inlineExp = /__inline\(['"](.*?)['"]\)/g;
 
-    str = str.replace(inlineExp,(match, p) => {
-      return loadFile(base, p);
+    str = str.replace(inlineExp,(match, url) => {
+      return loadFile(path.dirname(p), url);
     });
 
     return splitToken + str + splitToken;
