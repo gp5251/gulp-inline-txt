@@ -15,7 +15,7 @@ module.exports = function (options) {
     }
 
     var str = file.contents.toString().replace(/__inline\(['"](.*?)['"]\)/g, (match, filepath)=>{
-      return loadFile(file.base, filepath);
+      return loadFile(file.base, filepath, file.history[0], new FileLink(null, file.history[0]));
     });
 
     file.contents = new Buffer(str || '');
@@ -24,19 +24,47 @@ module.exports = function (options) {
   });
 };
 
-function loadFile(base, p, splitToken = '') {
+function FileLink(host = null, path = './') {
+  this.host = host;
+  this.path = path;
+}
+
+FileLink.prototype.lookup = function(path = '') {
+  var found, file = this;
+
+  while(file) {
+    if (file.path == path) {
+      found = file.host.path;
+      break;
+    }
+    file = file.host;
+  }
+
+  return found;
+}
+
+function loadFile(base, p, from, fileLink = new FileLink) {
   p = path.resolve(base, p); 
+
+  var found = fileLink.lookup(p);
+  if (!!found) {
+    console.error(p, 'in', from+', '+found, 'triggered circular reference!');
+    return '';
+  }
+
+  var childFileLink = new FileLink(fileLink, p);
+
   if (fs.existsSync(p)) {
     var str = fs.readFileSync(p, 'utf8');
     var inlineExp = /__inline\(['"](.*?)['"]\)/g;
 
     str = str.replace(inlineExp,(match, url) => {
-      return loadFile(path.dirname(p), url);
+      return loadFile(path.dirname(p), url, p, childFileLink);
     });
 
-    return splitToken + str + splitToken;
+    return str;
   } else {
-    console.error(p, 'not exist!');
+    console.error(p, 'referenced by', from, 'is not exist!');
     return '';
   }
 }
