@@ -35,4 +35,9 @@ console.log(1);
 console.log(2);
 ```
 
-Later to add compression;
+Also you can cancel the inline temporarily.
+``` javascript
+//__inline('path/to/file')
+```
+
+Later to add compression.
