@@ -12,7 +12,8 @@
     "gulpplugin",
     "inline",
     "css",
-    "javascript"
+    "javascript",
+    "html",
   ],
   "dependencies": {
     "gulp-util": "^3.0.8",

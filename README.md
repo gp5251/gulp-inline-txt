@@ -17,7 +17,7 @@ gulp.task('inline', function(done) {
 });
 ```
 
-In your file, such a js file:
+In your file, such as a js file:
 
 a.js
 ``` javascript
